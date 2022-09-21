@@ -8,6 +8,7 @@ import 'core/cubit/app_colors_cubit.dart';
 import 'core/dependency_injection.dart';
 import 'core/router.dart' as router;
 import 'core/service/navigation_service.dart';
+import 'features/authentication/bloc/authentication_bloc.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -15,8 +16,16 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return I18n(
-      child: BlocProvider(
-        create: (_) => getIt<AppColorsCubit>(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => getIt<AppColorsCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => getIt<AuthenticationBloc>()
+              ..add(const AuthenticationEvent.startCheckAuthentication()),
+          ),
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Exminses',
@@ -32,7 +41,7 @@ class App extends StatelessWidget {
           ],
           navigatorKey: getIt<NavigationService>().navigatorKey,
           onGenerateRoute: router.generateRoute,
-          initialRoute: routes.tempForTest,
+          initialRoute: routes.splash,
         ),
       ),
     );
