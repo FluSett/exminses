@@ -1,4 +1,4 @@
-package com.flusett.exminses.exminses
+package com.flusett.exminses
 
 import io.flutter.embedding.android.FlutterActivity
 
