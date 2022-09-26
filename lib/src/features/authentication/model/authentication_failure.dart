@@ -1,24 +1,76 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:exminses/src/localization.i18n.dart';
 
-part 'authentication_failure.freezed.dart';
+import '../../../core/model/failure.dart';
 
-@freezed
-abstract class AuthenticationFailure with _$AuthenticationFailure {
-  const factory AuthenticationFailure.cancelledByUser() = CancelledByUser;
-  const factory AuthenticationFailure.serverError() = ServerError;
-  const factory AuthenticationFailure.emailAlreadyInUse() = EmailAlreadyInUse;
-  const factory AuthenticationFailure.invalidEmail() = InvalidEmail;
-  const factory AuthenticationFailure.operationNotAllowed() =
-      OperationNotAllowed;
-  const factory AuthenticationFailure.weakPassword() = WeakPassword;
-  const factory AuthenticationFailure.userDisabled() = UserDisabled;
-  const factory AuthenticationFailure.userNotFound() = UserNotFound;
-  const factory AuthenticationFailure.wrongPassword() = WrongPassword;
-  const factory AuthenticationFailure.accountExistsWithDifferentCredential() =
-      AccountExistsWithDifferentCredential;
-  const factory AuthenticationFailure.invalidCredential() = InvalidCredential;
-  const factory AuthenticationFailure.invalidVerificationCode() =
-      InvalidVerificationCode;
-  const factory AuthenticationFailure.invalidVerificationId() =
-      InvalidVerificationId;
+class AuthenticationFailure extends Failure {
+  AuthenticationFailure.cancelledByUser() {
+    message = cancelledByUser.i18n;
+  }
+  AuthenticationFailure.serverError() {
+    message = serverError.i18n;
+  }
+  AuthenticationFailure.emailAlreadyInUse() {
+    message = emailAlreadyInUse.i18n;
+  }
+  AuthenticationFailure.invalidEmail() {
+    message = invalidEmail.i18n;
+  }
+  AuthenticationFailure.operationNotAllowed() {
+    message = operationNotAllowed.i18n;
+  }
+  AuthenticationFailure.weakPassword() {
+    message = weakPassword.i18n;
+  }
+  AuthenticationFailure.userDisabled() {
+    message = userDisabled.i18n;
+  }
+  AuthenticationFailure.userNotFound() {
+    message = userNotFound.i18n;
+  }
+  AuthenticationFailure.wrongPassword() {
+    message = wrongPassword.i18n;
+  }
+  AuthenticationFailure.accountExistsWithDifferentCredential() {
+    message = accountExistsWithDifferentCredential.i18n;
+  }
+  AuthenticationFailure.invalidCredential() {
+    message = invalidCredential.i18n;
+  }
+  AuthenticationFailure.invalidVerificationCode() {
+    message = invalidVerificationCode.i18n;
+  }
+  AuthenticationFailure.invalidVerificationId() {
+    message = invalidVerificationId.i18n;
+  }
+
+  static AuthenticationFailure getAuthenticationFailure(String errorCode) {
+    switch (errorCode.toUpperCase()) {
+      case 'CANCELLED-BY-USER':
+        return AuthenticationFailure.cancelledByUser();
+      case 'EMAIL-ALREADY-IN-USE':
+        return AuthenticationFailure.emailAlreadyInUse();
+      case 'INVALID-EMAIL':
+        return AuthenticationFailure.invalidEmail();
+      case 'WEAK-PASSWORD':
+        return AuthenticationFailure.weakPassword();
+      case 'ACCOUNT-EXISTS-WITH-DIFFERENT-CREDENTIAL':
+        return AuthenticationFailure.accountExistsWithDifferentCredential();
+      case 'INVALID-CREDENTIAL':
+        return AuthenticationFailure.invalidCredential();
+      case 'OPERATION-NOT-ALLOWED':
+        return AuthenticationFailure.operationNotAllowed();
+      case 'USER-DISABLED':
+        return AuthenticationFailure.userDisabled();
+      case 'USER-NOT-FOUND':
+        return AuthenticationFailure.userNotFound();
+      case 'WRONG-PASSWORD':
+        return AuthenticationFailure.wrongPassword();
+      case 'INVALID-VERIFICATION-CODE':
+        return AuthenticationFailure.invalidVerificationCode();
+      case 'INVALID-VERIFICATION-ID':
+        return AuthenticationFailure.invalidVerificationId();
+      default:
+        return AuthenticationFailure.serverError();
+    }
+  }
 }

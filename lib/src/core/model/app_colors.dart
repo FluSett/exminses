@@ -1,24 +1,28 @@
 import 'dart:ui' show Color;
 
-//! NOT FILLED OUT, JUST A TEMPLATE
-//TODO: FILL IN THEMES
-class AppColors {
+import 'package:equatable/equatable.dart';
+
+class AppColors extends Equatable {
   final Color scaffold;
   final Color formIcon;
   final Color floatingActionButton;
+  final Color filledButton;
+  final Color subtitleColor;
 
-  const AppColors.light() //Default
-      : scaffold = const Color(0xFFFAFAFA),
-        formIcon = const Color(0xFFADD9C5),
-        floatingActionButton = const Color(0xFFFF8A82);
+  const AppColors({
+    required this.scaffold,
+    required this.formIcon,
+    required this.floatingActionButton,
+    required this.filledButton,
+    required this.subtitleColor,
+  });
 
-  const AppColors.dark()
-      : scaffold = const Color(0xFFFAFAFA),
-        formIcon = const Color(0xFFADD9C5),
-        floatingActionButton = const Color(0xFFFF8A82);
-
-  const AppColors.sky()
-      : scaffold = const Color(0x00000000),
-        formIcon = const Color(0xFFADD9C5),
-        floatingActionButton = const Color(0xFFFF8A82);
+  @override
+  List<Object> get props => [
+        scaffold,
+        formIcon,
+        floatingActionButton,
+        filledButton,
+        subtitleColor,
+      ];
 }
