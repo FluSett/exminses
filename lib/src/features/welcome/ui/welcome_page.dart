@@ -42,7 +42,7 @@ class WelcomePageState extends State<WelcomePage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(30),
-          child: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+          child: BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               state.mapOrNull(
                 progress: (_) => showLoading(),
@@ -52,9 +52,7 @@ class WelcomePageState extends State<WelcomePage> {
                 },
               );
             },
-            builder: (context, state) {
-              return const BodyColumn();
-            },
+            child: const BodyColumn(),
           ),
         ),
       ),
