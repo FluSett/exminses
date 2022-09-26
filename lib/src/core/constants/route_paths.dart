@@ -1,3 +1,5 @@
 const String splash = '/';
-const String tempForTest1 = 'tempForTest1';
-const String tempForTest2 = 'tempForTest2';
+const String welcome = '/welcome';
+const String signIn = '/sign-in';
+const String signUp = '/sign-up';
+const String home = '/home';

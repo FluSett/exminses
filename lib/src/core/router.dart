@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../features/welcome/ui/welcome_page.dart';
 import 'constants/route_paths.dart' as routes;
 import 'view/splash/splash_page.dart';
 
@@ -9,19 +10,31 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const SplashPage(),
       );
-    case routes.tempForTest1:
+    case routes.welcome:
+      return MaterialPageRoute(
+        builder: (context) => const WelcomePage(),
+      );
+    case routes.signIn:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(
           body: Center(
-            child: Text('Temp path for 1'),
+            child: Text('Sign in'),
           ),
         ),
       );
-    case routes.tempForTest2:
+    case routes.signUp:
       return MaterialPageRoute(
         builder: (context) => const Scaffold(
           body: Center(
-            child: Text('Temp path for 2'),
+            child: Text('Sign up'),
+          ),
+        ),
+      );
+    case routes.home:
+      return MaterialPageRoute(
+        builder: (context) => const Scaffold(
+          body: Center(
+            child: Text('Home'),
           ),
         ),
       );
