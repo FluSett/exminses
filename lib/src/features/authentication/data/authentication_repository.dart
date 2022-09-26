@@ -1,23 +1,26 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../core/model/failure.dart';
 import '../model/authentication_failure.dart';
 
 abstract class IAuthenticationRepository {
-  Stream<User?> getSignedInUser();
-  Future<Either<AuthenticationFailure, Unit>> registerWithEmailAndPassword({
+  Either<Failure, User> getUserOrFailure();
+  Stream<User?> getAuthenticationStateChanges();
+  Future<Either<Failure, Unit>> registerWithEmailAndPassword({
     required String email,
     required String password,
   });
-  Future<Either<AuthenticationFailure, Unit>> signInWithEmailAndPassword({
+  Future<Either<Failure, Unit>> signInWithEmailAndPassword({
     required String email,
     required String password,
   });
-  Future<Either<AuthenticationFailure, Unit>> signInWithGoogle();
-  Future<Either<AuthenticationFailure, Unit>> signInWithFacebook();
-  Future<Either<AuthenticationFailure, Unit>> sendPasswordReset(String email);
+  Future<Either<Failure, Unit>> signInWithGoogle();
+  Future<Either<Failure, Unit>> signInWithFacebook();
+  Future<Either<Failure, Unit>> sendPasswordReset(String email);
   Future<void> signOut();
 }
 
@@ -32,41 +35,23 @@ class AuthenticationRepository implements IAuthenticationRepository {
     required this.googleSignIn,
   });
 
-  AuthenticationFailure getAuthenticationFailure(String errorCode) {
-    switch (errorCode.toUpperCase()) {
-      case 'EMAIL-ALREADY-IN-USE':
-        return const AuthenticationFailure.emailAlreadyInUse();
-      case 'INVALID-EMAIL':
-        return const AuthenticationFailure.invalidEmail();
-      case 'WEAK-PASSWORD':
-        return const AuthenticationFailure.weakPassword();
-      case 'ACCOUNT-EXISTS-WITH-DIFFERENT-CREDENTIAL':
-        return const AuthenticationFailure
-            .accountExistsWithDifferentCredential();
-      case 'INVALID-CREDENTIAL':
-        return const AuthenticationFailure.invalidCredential();
-      case 'OPERATION-NOT-ALLOWED':
-        return const AuthenticationFailure.operationNotAllowed();
-      case 'USER-DISABLED':
-        return const AuthenticationFailure.userDisabled();
-      case 'USER-NOT-FOUND':
-        return const AuthenticationFailure.userNotFound();
-      case 'WRONG-PASSWORD':
-        return const AuthenticationFailure.wrongPassword();
-      case 'INVALID-VERIFICATION-CODE':
-        return const AuthenticationFailure.invalidVerificationCode();
-      case 'INVALID-VERIFICATION-ID':
-        return const AuthenticationFailure.invalidVerificationId();
-      default:
-        return const AuthenticationFailure.serverError();
+  @override
+  Either<Failure, User> getUserOrFailure() {
+    final firebaseUser = firebaseAuth.currentUser;
+
+    if (firebaseUser == null) {
+      return left(AuthenticationFailure.userNotFound()); //user not found);
     }
+
+    return right(firebaseUser);
   }
 
   @override
-  Stream<User?> getSignedInUser() => firebaseAuth.authStateChanges();
+  Stream<User?> getAuthenticationStateChanges() =>
+      firebaseAuth.authStateChanges();
 
   @override
-  Future<Either<AuthenticationFailure, Unit>> registerWithEmailAndPassword(
+  Future<Either<Failure, Unit>> registerWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
       await firebaseAuth.createUserWithEmailAndPassword(
@@ -76,13 +61,13 @@ class AuthenticationRepository implements IAuthenticationRepository {
       return right(unit);
     } on FirebaseAuthException catch (error) {
       return left(
-        getAuthenticationFailure(error.code),
+        AuthenticationFailure.getAuthenticationFailure(error.code),
       );
     }
   }
 
   @override
-  Future<Either<AuthenticationFailure, Unit>> signInWithEmailAndPassword(
+  Future<Either<Failure, Unit>> signInWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
       await firebaseAuth.signInWithEmailAndPassword(
@@ -92,18 +77,18 @@ class AuthenticationRepository implements IAuthenticationRepository {
       return right(unit);
     } on FirebaseAuthException catch (error) {
       return left(
-        getAuthenticationFailure(error.code),
+        AuthenticationFailure.getAuthenticationFailure(error.code),
       );
     }
   }
 
   @override
-  Future<Either<AuthenticationFailure, Unit>> signInWithFacebook() async {
+  Future<Either<Failure, Unit>> signInWithFacebook() async {
     try {
       final loginResult = await facebookAuth.login();
 
       if (loginResult.accessToken == null) {
-        return left(const AuthenticationFailure.cancelledByUser());
+        return left(AuthenticationFailure.cancelledByUser());
       }
 
       final facebookAuthCredential =
@@ -114,18 +99,18 @@ class AuthenticationRepository implements IAuthenticationRepository {
       return right(unit);
     } on FirebaseAuthException catch (error) {
       return left(
-        getAuthenticationFailure(error.code),
+        AuthenticationFailure.getAuthenticationFailure(error.code),
       );
     }
   }
 
   @override
-  Future<Either<AuthenticationFailure, Unit>> signInWithGoogle() async {
+  Future<Either<Failure, Unit>> signInWithGoogle() async {
     try {
       final googleUser = await googleSignIn.signIn();
 
       if (googleUser == null) {
-        return left(const AuthenticationFailure.cancelledByUser());
+        return left(AuthenticationFailure.cancelledByUser());
       }
 
       final googleAuthentication = await googleUser.authentication;
@@ -139,20 +124,19 @@ class AuthenticationRepository implements IAuthenticationRepository {
 
       return right(unit);
     } on FirebaseAuthException catch (error) {
-      return left(
-        getAuthenticationFailure(error.code),
-      );
+      return left(AuthenticationFailure.getAuthenticationFailure(error.code));
+    } on PlatformException catch (error) {
+      return left(AuthenticationFailure.getAuthenticationFailure(error.code));
     }
   }
 
   @override
-  Future<Either<AuthenticationFailure, Unit>> sendPasswordReset(
-      String email) async {
+  Future<Either<Failure, Unit>> sendPasswordReset(String email) async {
     try {
       await firebaseAuth.sendPasswordResetEmail(email: email);
       return right(unit);
     } on FirebaseAuthException catch (error) {
-      return left(getAuthenticationFailure(error.code));
+      return left(AuthenticationFailure.getAuthenticationFailure(error.code));
     }
   }
 
