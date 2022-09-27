@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../features/authentication/bloc/authentication_bloc.dart';
 import '../features/authentication/data/authentication_repository.dart';
+import 'cubit/validation/validation_bloc.dart';
 import 'cubit/app_colors_cubit.dart';
 import 'service/navigation_service.dart';
 
@@ -12,6 +13,7 @@ final getIt = GetIt.instance;
 
 void setUpDI() {
   getIt.registerLazySingleton<AppColorsCubit>(() => AppColorsCubit());
+  getIt.registerLazySingleton<ValidationCubit>(() => ValidationCubit());
   getIt.registerLazySingleton<NavigationService>(() => NavigationService());
 
   //AUTHENTICATION
