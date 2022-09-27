@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../features/sign_in/ui/sign_in_page.dart';
+import '../features/sign_up_page/ui/sign_up_page.dart';
 import '../features/welcome/ui/welcome_page.dart';
 import 'constants/route_paths.dart' as routes;
-import 'view/splash/splash_page.dart';
+import 'view/pages/splash_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -16,19 +18,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case routes.signIn:
       return MaterialPageRoute(
-        builder: (context) => const Scaffold(
-          body: Center(
-            child: Text('Sign in'),
-          ),
-        ),
+        builder: (context) => const SignInPage(),
       );
     case routes.signUp:
       return MaterialPageRoute(
-        builder: (context) => const Scaffold(
-          body: Center(
-            child: Text('Sign up'),
-          ),
-        ),
+        builder: (context) => const SignUpPage(),
       );
     case routes.home:
       return MaterialPageRoute(
