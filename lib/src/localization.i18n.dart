@@ -25,6 +25,9 @@ const passwordFormLabel = 'passwordFormLabel';
 const fillInAllTheFields = 'fillInAllTheFields';
 const iAlreadyHaveAnAccount = 'iAlreadyHaveAnAccount';
 const createAnAccountSubtitle = 'createAnAccountSubtitle';
+const forgotPassword = 'forgotPassword';
+
+const sent = 'sent';
 
 //Authentication Failures
 const error = 'error';
