@@ -6,3 +6,10 @@ void showErrorSnackBar(BuildContext context, String message) {
 
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
+
+//TODO: upgrade ui design for snackbar
+void showSuccessSnackBar(BuildContext context, String message) {
+  final snackBar = SnackBar(content: Text(message));
+
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
