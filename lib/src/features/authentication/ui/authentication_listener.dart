@@ -5,6 +5,7 @@ import '../../../core/dependency_injection.dart';
 import '../../../core/service/navigation_service.dart';
 import '../../../core/view/widgets/loading_dialog.dart';
 import '../../../core/view/widgets/snackbars.dart';
+import '../../../localization.i18n.dart';
 import '../../authentication/bloc/authentication_bloc.dart';
 
 class AuthenticationListener extends StatelessWidget {
@@ -23,6 +24,10 @@ class AuthenticationListener extends StatelessWidget {
       listener: (context, state) {
         state.mapOrNull(
           progress: (_) => showLoadingDialog(context),
+          success: (_) {
+            navigationService.goBack();
+            showSuccessSnackBar(context, sent.i18n);
+          },
           error: (error) {
             navigationService.goBack();
             showErrorSnackBar(context, error.failure.message);
