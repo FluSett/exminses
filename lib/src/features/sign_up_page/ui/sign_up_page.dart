@@ -34,116 +34,118 @@ class SignUpPage extends HookWidget {
     final validationCubit = context.read<ValidationCubit>();
 
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(
-          paddingFromLTRB[0],
-          paddingFromLTRB[1],
-          paddingFromLTRB[2],
-          paddingFromLTRB[3],
-        ),
-        child: SizedBox(
-          height: height - paddingFromLTRB[1] - paddingFromLTRB[3],
-          child: Column(
-            children: [
-              AppBarSettings(appColorsCubit: appColorsCubit),
-              const SizedBox(height: 28),
-              AuthenticationTitle(
-                title: createAnAccount.i18n,
-                subtitle: createAnAccountSubtitle.i18n,
-                titleFontSize: 34,
-                subtitleFontSize: 14,
-                subtitleColor: appColorsCubit.state.subtitleColor,
-              ),
-              const SizedBox(height: 38),
-              StreamBuilder(
-                stream: validationCubit.emailStream,
-                builder: (context, snapshot) {
-                  return AuthenticationFormField(
-                    onChange: (text) {
-                      validationCubit.updateEmail(text);
-                    },
-                    errorText: snapshot.error.toString(),
-                    appColors: appColorsCubit.state,
-                    hintText: 'emailHintText',
-                    labelText: 'emailLabelText',
-                    prefixIconData: Icons.email,
-                  );
-                },
-              ),
-              const SizedBox(height: 18),
-              StreamBuilder(
-                stream: validationCubit.passwordStream,
-                builder: (context, snapshot) {
-                  return AuthenticationFormField(
-                    onChange: (text) {
-                      validationCubit.updatePassword(text);
-                    },
-                    appColors: appColorsCubit.state,
-                    errorText: snapshot.error.toString(),
-                    hintText: 'passwordHintText',
-                    labelText: 'passwordLabelText',
-                    prefixIconData: Icons.lock,
-                    defaultObscure: true,
-                    showVisibilityButton: true,
-                  );
-                },
-              ),
-              const SizedBox(height: 18),
-              StreamBuilder(
-                stream: validationCubit.confirmPasswordStream,
-                builder: (context, snapshot) {
-                  return AuthenticationFormField(
-                    onChange: (text) {
-                      validationCubit.updateConfirmPassword(text);
-                    },
-                    appColors: appColorsCubit.state,
-                    errorText: snapshot.error.toString(),
-                    hintText: 'confirmPasswordHintText',
-                    labelText: 'confirmPasswordLabelText',
-                    prefixIconData: Icons.lock,
-                    defaultObscure: true,
-                    showVisibilityButton: true,
-                  );
-                },
-              ),
-              isKeyboard ? const Spacer() : const SizedBox(height: 40),
-              StreamBuilder(
-                stream: validationCubit.validateFormSignUp,
-                builder: (context, snapshot) {
-                  return MainButton(
-                    isActive: snapshot.hasData,
-                    appColorsCubit: appColorsCubit,
-                    buttonText: signUp.i18n,
-                    callback: () => context.read<AuthenticationBloc>().add(
-                          AuthenticationEvent.registerWithEmailAndPassword(
-                            validationCubit.email,
-                            validationCubit.password,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(
+            paddingFromLTRB[0],
+            paddingFromLTRB[1],
+            paddingFromLTRB[2],
+            paddingFromLTRB[3],
+          ),
+          child: SizedBox(
+            height: height - paddingFromLTRB[1] - paddingFromLTRB[3],
+            child: Column(
+              children: [
+                AppBarSettings(appColorsCubit: appColorsCubit),
+                const SizedBox(height: 28),
+                AuthenticationTitle(
+                  title: createAnAccount.i18n,
+                  subtitle: createAnAccountSubtitle.i18n,
+                  titleFontSize: 34,
+                  subtitleFontSize: 14,
+                  subtitleColor: appColorsCubit.state.subtitleColor,
+                ),
+                const SizedBox(height: 38),
+                StreamBuilder(
+                  stream: validationCubit.emailStream,
+                  builder: (context, snapshot) {
+                    return AuthenticationFormField(
+                      onChange: (text) {
+                        validationCubit.updateEmail(text);
+                      },
+                      errorText: snapshot.error.toString(),
+                      appColors: appColorsCubit.state,
+                      hintText: 'emailHintText',
+                      labelText: 'emailLabelText',
+                      prefixIconData: Icons.email,
+                    );
+                  },
+                ),
+                const SizedBox(height: 18),
+                StreamBuilder(
+                  stream: validationCubit.passwordStream,
+                  builder: (context, snapshot) {
+                    return AuthenticationFormField(
+                      onChange: (text) {
+                        validationCubit.updatePassword(text);
+                      },
+                      appColors: appColorsCubit.state,
+                      errorText: snapshot.error.toString(),
+                      hintText: 'passwordHintText',
+                      labelText: 'passwordLabelText',
+                      prefixIconData: Icons.lock,
+                      defaultObscure: true,
+                      showVisibilityButton: true,
+                    );
+                  },
+                ),
+                const SizedBox(height: 18),
+                StreamBuilder(
+                  stream: validationCubit.confirmPasswordStream,
+                  builder: (context, snapshot) {
+                    return AuthenticationFormField(
+                      onChange: (text) {
+                        validationCubit.updateConfirmPassword(text);
+                      },
+                      appColors: appColorsCubit.state,
+                      errorText: snapshot.error.toString(),
+                      hintText: 'confirmPasswordHintText',
+                      labelText: 'confirmPasswordLabelText',
+                      prefixIconData: Icons.lock,
+                      defaultObscure: true,
+                      showVisibilityButton: true,
+                    );
+                  },
+                ),
+                isKeyboard ? const Spacer() : const SizedBox(height: 40),
+                StreamBuilder(
+                  stream: validationCubit.validateFormSignUp,
+                  builder: (context, snapshot) {
+                    return MainButton(
+                      isActive: snapshot.hasData,
+                      appColorsCubit: appColorsCubit,
+                      buttonText: signUp.i18n,
+                      callback: () => context.read<AuthenticationBloc>().add(
+                            AuthenticationEvent.registerWithEmailAndPassword(
+                              validationCubit.email,
+                              validationCubit.password,
+                            ),
                           ),
-                        ),
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 18,
-              ),
-              MethodsDivider(text: signUpMethods.i18n),
-              const SizedBox(
-                height: 18,
-              ),
-              const OtherAuthenticationMethods(),
-              const SizedBox(
-                height: 18,
-              ),
-              AnotherWay(
-                appColorsCubit: appColorsCubit,
-                primaryText: iAlreadyHaveAnAccount.i18n,
-                linkText: signUp.i18n,
-                callback: () {
-                  navigationService.goBack();
-                  navigationService.navigateTo(routes.signIn);
-                },
-              ),
-            ],
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                MethodsDivider(text: signUpMethods.i18n),
+                const SizedBox(
+                  height: 18,
+                ),
+                const OtherAuthenticationMethods(),
+                const SizedBox(
+                  height: 18,
+                ),
+                AnotherWay(
+                  appColorsCubit: appColorsCubit,
+                  primaryText: iAlreadyHaveAnAccount.i18n,
+                  linkText: signUp.i18n,
+                  callback: () {
+                    navigationService.goBack();
+                    navigationService.navigateTo(routes.signIn);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
