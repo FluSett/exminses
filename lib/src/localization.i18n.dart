@@ -5,15 +5,32 @@ import 'core/constants/strings.dart';
 //TODO: SPLIT REFACTOR
 
 const changeLanguage = 'changeLanguage';
+
+//Authentication
 const welcomeTitle = 'welcomeTitle';
-const welcome = 'welcome';
+const welcomeSubtitle = 'welcomeSubtitle';
+const welcomeBackTitle = 'welcomeTitle';
+const welcomeBackSubtitle = 'welcomeBackSubtitle';
 const createAnAccount = 'createAnAccount';
 const signUpMethods = 'signUpMethod';
+const signInMethods = 'signInMethod';
 const alreadyHaveAnAccount = 'alreadyHaveAnAccount';
+const iDontHaveAnAccount = 'iDontHaveAnAccount';
 const signIn = 'signIn';
-const error = 'error';
+const signUp = 'signUp';
+
+const emailFormLabel = 'emailFormLabel';
+const passwordFormLabel = 'passwordFormLabel';
+
+const fillInAllTheFields = 'fillInAllTheFields';
+const iAlreadyHaveAnAccount = 'iAlreadyHaveAnAccount';
+const createAnAccountSubtitle = 'createAnAccountSubtitle';
+const forgotPassword = 'forgotPassword';
+
+const sent = 'sent';
 
 //Authentication Failures
+const error = 'error';
 const cancelledByUser = 'cancelledByUser';
 const serverError = 'serverError';
 const emailAlreadyInUse = 'emailAlreadyInUse';
@@ -43,7 +60,7 @@ extension Localization on String {
         'uk_ua': 'Ласкаво просимо до $appName!',
         'ru_ru': 'Добро пожаловать в $appName!',
       },
-      welcome: {
+      welcomeSubtitle: {
         'en_us':
             'Here you will have access to track your expenses and get statistics about them.',
         'uk_ua':

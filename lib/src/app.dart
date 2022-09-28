@@ -12,6 +12,7 @@ import 'core/model/app_colors.dart';
 import 'core/router.dart' as router;
 import 'core/service/navigation_service.dart';
 import 'features/authentication/bloc/authentication_bloc.dart';
+import 'core/cubit/validation/validation_cubit.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -28,6 +29,9 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (_) => getIt<AuthenticationBloc>()
               ..add(const AuthenticationEvent.startCheckAuthentication()),
+          ),
+          BlocProvider(
+            create: (_) => getIt<ValidationCubit>(),
           ),
         ],
         child: BlocBuilder<AppColorsCubit, AppColors>(

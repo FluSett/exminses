@@ -10,8 +10,8 @@ import 'appbar_settings.dart';
 import 'authentication_title.dart';
 import 'main_block.dart';
 
-class BodyColumn extends StatelessWidget {
-  const BodyColumn({Key? key}) : super(key: key);
+class WelcomeBody extends StatelessWidget {
+  const WelcomeBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class BodyColumn extends StatelessWidget {
         const SizedBox(height: 28),
         AuthenticationTitle(
           title: welcomeTitle.i18n,
-          subtitle: welcome.i18n,
+          subtitle: welcomeSubtitle.i18n,
           titleFontSize: 52,
           subtitleFontSize: 14,
           subtitleColor: appColorsCubit.state.subtitleColor,
