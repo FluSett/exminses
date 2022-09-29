@@ -1,15 +1,39 @@
 import 'package:flutter/material.dart';
 
-//TODO: upgrade ui design for snackbar
-void showErrorSnackBar(BuildContext context, String message) {
-  final snackBar = SnackBar(content: Text(message));
+import '../../model/app_colors.dart';
 
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+//TODO: upgrade ui design for snackbar
+void showErrorSnackBar(
+  BuildContext context,
+  AppColors appColors,
+  String message,
+) {
+  final snackBar = SnackBar(
+    content: Text(
+      message,
+      style: TextStyle(color: appColors.error),
+    ),
+  );
+
+  ScaffoldMessenger.of(context)
+    ..removeCurrentSnackBar()
+    ..showSnackBar(snackBar);
 }
 
 //TODO: upgrade ui design for snackbar
-void showSuccessSnackBar(BuildContext context, String message) {
-  final snackBar = SnackBar(content: Text(message));
+void showSuccessSnackBar(
+  BuildContext context,
+  AppColors appColors,
+  String message,
+) {
+  final snackBar = SnackBar(
+    content: Text(
+      message,
+      style: TextStyle(color: appColors.primary),
+    ),
+  );
 
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  ScaffoldMessenger.of(context)
+    ..removeCurrentSnackBar()
+    ..showSnackBar(snackBar);
 }

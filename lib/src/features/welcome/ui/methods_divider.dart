@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/model/app_colors.dart';
+
 class MethodsDivider extends StatelessWidget {
+  final AppColors appColors;
   final String text;
-  const MethodsDivider({Key? key, required this.text}) : super(key: key);
+
+  const MethodsDivider({
+    Key? key,
+    required this.appColors,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,16 +21,16 @@ class MethodsDivider extends StatelessWidget {
           child: Container(
             width: 1,
             height: 1,
-            color: Colors.grey.shade500,
+            color: appColors.subtitleText,
           ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Text(
             text,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 12,
-              color: Colors.black54,
+              color: appColors.subtitleText,
             ),
           ),
         ),
@@ -30,7 +38,7 @@ class MethodsDivider extends StatelessWidget {
           child: Container(
             width: 1,
             height: 1,
-            color: Colors.grey.shade500,
+            color: appColors.subtitleText,
           ),
         ),
       ],

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-void showLoadingDialog(BuildContext context) {
+import '../../model/app_colors.dart';
+
+void showLoadingDialog(BuildContext context, AppColors appColors) {
   showGeneralDialog(
     context: context,
-    barrierColor: Colors.black54,
+    barrierColor: appColors.notActive,
     barrierDismissible: false,
     pageBuilder: (_, __, ___) => Center(
       child: CircularProgressIndicator(
-        color: Theme.of(context).primaryColor,
+        color: appColors.primary,
       ),
     ),
   );

@@ -1,15 +1,20 @@
 import 'package:colorful_iconify_flutter/icons/twemoji.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:iconify_flutter/iconify_flutter.dart';
 
 import '../../../core/constants/locales.dart';
 import '../../../core/cubit/app_colors_cubit.dart';
+import '../../../core/model/app_colors.dart';
 
 class AppBarSettings extends StatelessWidget {
-  final AppColorsCubit appColorsCubit;
-  const AppBarSettings({Key? key, required this.appColorsCubit})
-      : super(key: key);
+  final AppColors appColors;
+
+  const AppBarSettings({
+    Key? key,
+    required this.appColors,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +22,7 @@ class AppBarSettings extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         DropdownButton(
+          dropdownColor: appColors.background,
           onChanged: (selectedLocale) =>
               I18n.of(context).locale = selectedLocale,
           items: [
@@ -25,9 +31,9 @@ class AppBarSettings extends StatelessWidget {
                 value: locale,
                 child: Text(
                   locale.languageCode.toUpperCase(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: Colors.black,
+                    color: appColors.titleText,
                   ),
                 ),
               ),
@@ -36,17 +42,17 @@ class AppBarSettings extends StatelessWidget {
         ),
         const Spacer(),
         IconButton(
-          onPressed: () => appColorsCubit.nextAppColors(),
+          onPressed: () => context.read<AppColorsCubit>().nextAppColors(),
           icon: const Iconify(
             Twemoji.artist_palette,
             size: 24,
           ),
         ),
         Text(
-          '${appColorsCubit.selectedIndex + 1} / ${appColorsCubit.appColorsLength}',
-          style: const TextStyle(
+          '${context.read<AppColorsCubit>().selectedIndex + 1} / ${context.read<AppColorsCubit>().appColorsLength}',
+          style: TextStyle(
             fontSize: 12,
-            color: Colors.black,
+            color: appColors.titleText,
           ),
         ),
       ],
