@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/cubit/app_colors_cubit.dart';
+import '../../../core/model/app_colors.dart';
 
 class AnotherWay extends StatelessWidget {
-  final AppColorsCubit appColorsCubit;
+  final AppColors appColors;
   final String primaryText;
   final String linkText;
   final VoidCallback callback;
+
   const AnotherWay({
     Key? key,
-    required this.appColorsCubit,
+    required this.appColors,
     required this.primaryText,
     required this.linkText,
     required this.callback,
@@ -22,7 +23,7 @@ class AnotherWay extends StatelessWidget {
       children: [
         Text(
           primaryText,
-          style: const TextStyle(fontSize: 14),
+          style: TextStyle(fontSize: 14, color: appColors.subtitleText),
         ),
         const SizedBox(
           width: 5,
@@ -32,8 +33,9 @@ class AnotherWay extends StatelessWidget {
           child: Text(
             linkText,
             style: TextStyle(
-              color: appColorsCubit.state.filledButton,
+              color: appColors.primary,
               fontSize: 14,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

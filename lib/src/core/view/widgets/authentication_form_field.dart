@@ -5,19 +5,19 @@ import '../../model/app_colors.dart';
 
 class AuthenticationFormField extends HookWidget {
   final AppColors appColors;
-  final String hintText;
   final String labelText;
+  final String hintText;
+  final String? errorText;
   final IconData prefixIconData;
   final bool showVisibilityButton;
   final bool defaultObscure;
-  final String? errorText;
   final void Function(String)? onChange;
 
   const AuthenticationFormField({
     Key? key,
     required this.appColors,
-    required this.hintText,
     required this.labelText,
+    required this.hintText,
     required this.prefixIconData,
     required this.onChange,
     this.errorText,
@@ -44,14 +44,14 @@ class AuthenticationFormField extends HookWidget {
     return Container(
       padding: const EdgeInsets.only(right: 4),
       decoration: BoxDecoration(
-        color: isActive.value ? appColors.scaffold : const Color(0xFFF1F2F3),
+        color: isActive.value ? appColors.background : appColors.notActive,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           width: 1,
           color: errorText != 'null'
-              ? Colors.red
+              ? appColors.error
               : isActive.value
-                  ? Colors.blue
+                  ? appColors.primary
                   : Colors.transparent,
         ),
       ),
@@ -59,26 +59,29 @@ class AuthenticationFormField extends HookWidget {
         onChanged: onChange,
         focusNode: focusNode,
         obscureText: obscure.value,
-        style: const TextStyle(height: 2, fontSize: 14),
+        style: TextStyle(
+          height: 2,
+          fontSize: 14,
+          color: appColors.titleText,
+        ),
         decoration: InputDecoration(
           counterText: errorText == 'null' ? null : '$errorText      ',
-          counterStyle: const TextStyle(
-            color: Colors.red,
+          counterStyle: TextStyle(
+            color: appColors.error,
             height: 2,
           ),
           labelText: labelText,
-          labelStyle: const TextStyle(
+          labelStyle: TextStyle(
             height: 1,
             fontSize: 12,
-            color: Colors.black54,
+            color: appColors.subtitleText,
           ),
           hintText: hintText,
-          hintStyle: const TextStyle(
-            fontSize: 14,
-          ),
+          hintStyle: TextStyle(fontSize: 14, color: appColors.subtitleText),
           prefixIcon: Icon(
             prefixIconData,
             size: 25,
+            color: appColors.primary,
           ),
           suffixIcon: showVisibilityButton
               ? IconButton(
@@ -88,6 +91,7 @@ class AuthenticationFormField extends HookWidget {
                   icon: Icon(
                     obscure.value ? Icons.visibility_off : Icons.visibility,
                     size: 25,
+                    color: appColors.disabled,
                   ),
                 )
               : null,

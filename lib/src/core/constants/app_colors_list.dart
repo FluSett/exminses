@@ -1,31 +1,34 @@
-import 'package:exminses/src/core/model/app_colors.dart';
+import 'dart:ui' show Color;
 
-import 'package:flutter/material.dart' show Color, Colors;
+import '../model/app_colors.dart';
 
-//! NOT FILLED OUT, JUST A TEMPLATE
-//TODO: FILL IN THEMES
-final appColorsLight = AppColors(
-  scaffold: const Color(0xFFFAFAFA),
-  formIcon: const Color(0xFFADD9C5),
-  floatingActionButton: const Color(0xFFFF8A82),
-  filledButton: const Color(0xFFADD9C5),
-  subtitleColor: Colors.grey.shade500,
+const appColorsLight = AppColors(
+  background: Color(0xFFFAFAFA),
+  primary: Color.fromARGB(255, 117, 212, 155),
+  secondary: Color.fromARGB(255, 189, 223, 202),
+  error: Color(0xFFFF8A82),
+  notActive: Color(0xFFEFF0F2),
+  disabled: Color(0xFFA0A0A0),
+  titleText: Color(0xFF000000),
+  subtitleText: Color.fromARGB(255, 145, 144, 144),
+  buttonText: Color(0xFFFAFAFA),
 );
 
 const appColorsDark = AppColors(
-  scaffold: Color(0xFFFFBA00),
-  formIcon: Color(0xFFADD9C5),
-  floatingActionButton: Color(0xFFFF8A82),
-  filledButton: Color(0xFFADD9C5),
-  subtitleColor: Color(0xFFFF8A82),
+  background: Color.fromARGB(255, 25, 27, 32),
+  primary: Color(0xFF85B899),
+  secondary: Color(0xFFD2EAD9),
+  error: Color(0xFFFF8A82),
+  notActive: Color.fromARGB(255, 47, 50, 56),
+  disabled: Color(0xFFA0A0A0),
+  titleText: Color(0xFFFAFAFA),
+  subtitleText: Color.fromARGB(255, 179, 178, 178),
+  buttonText: Color(0xFFFAFAFA),
 );
 
-const appColorsSky = AppColors(
-  scaffold: Color(0x00000000),
-  formIcon: Color(0xFFADD9C5),
-  floatingActionButton: Color(0xFFFF8A82),
-  filledButton: Color(0xFFADD9C5),
-  subtitleColor: Color(0xFFFF8A82),
-);
+//TODO: add 2-3 themes
 
-final appColorsList = [appColorsLight, appColorsDark, appColorsSky];
+final appColorsList = [
+  appColorsLight,
+  appColorsDark,
+];

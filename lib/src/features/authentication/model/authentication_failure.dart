@@ -1,5 +1,5 @@
-import 'package:exminses/src/localization.i18n.dart';
-
+import '../../../core/localization/authentication_failures.i18n.dart';
+import '../../../core/localization/localization.i18n.dart';
 import '../../../core/model/failure.dart';
 
 class AuthenticationFailure extends Failure {

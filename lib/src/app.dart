@@ -7,12 +7,12 @@ import 'package:i18n_extension/i18n_widget.dart';
 import 'core/constants/locales.dart';
 import 'core/constants/route_paths.dart' as routes;
 import 'core/cubit/app_colors_cubit.dart';
+import 'core/cubit/validation/validation_cubit.dart';
 import 'core/dependency_injection.dart';
 import 'core/model/app_colors.dart';
 import 'core/router.dart' as router;
 import 'core/service/navigation_service.dart';
 import 'features/authentication/bloc/authentication_bloc.dart';
-import 'core/cubit/validation/validation_cubit.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -20,6 +20,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final navigationService = getIt<NavigationService>();
+
     return I18n(
       child: MultiBlocProvider(
         providers: [
@@ -35,14 +36,12 @@ class App extends StatelessWidget {
           ),
         ],
         child: BlocBuilder<AppColorsCubit, AppColors>(
-          builder: (context, state) {
+          builder: (context, appColors) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                 textTheme: GoogleFonts.ptMonoTextTheme(),
-                scaffoldBackgroundColor: state.scaffold,
-                primaryColor:
-                    state.filledButton, //TODO: change it after fix AppColors
+                scaffoldBackgroundColor: appColors.background,
               ),
               title: 'Exminses',
               localizationsDelegates: const [

@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/cubit/app_colors_cubit.dart';
+import '../../../core/model/app_colors.dart';
 import 'another_way.dart';
 import 'main_button.dart';
 import 'methods_divider.dart';
-import 'other_authentication_methods.dart';
+import 'social_authentication_methods.dart';
 
 class MainBlock extends StatelessWidget {
-  final AppColorsCubit appColorsCubit;
+  final AppColors appColors;
   final String mainButtonText;
   final String methodsDividerText;
   final String anotherWayPrimaryText;
   final String anotherWayLinkText;
   final VoidCallback anotherWayCallback;
   final VoidCallback mainButtonCallback;
+
   const MainBlock({
     Key? key,
-    required this.appColorsCubit,
+    required this.appColors,
     required this.mainButtonText,
     required this.methodsDividerText,
     required this.anotherWayPrimaryText,
@@ -30,23 +31,26 @@ class MainBlock extends StatelessWidget {
     return Column(
       children: [
         MainButton(
-          appColorsCubit: appColorsCubit,
+          appColors: appColors,
           buttonText: mainButtonText,
           callback: mainButtonCallback,
         ),
         const SizedBox(
           height: 18,
         ),
-        MethodsDivider(text: methodsDividerText),
+        MethodsDivider(
+          appColors: appColors,
+          text: methodsDividerText,
+        ),
         const SizedBox(
           height: 18,
         ),
-        const OtherAuthenticationMethods(),
+        SocialAuthenticationMethods(appColors: appColors),
         const SizedBox(
           height: 18,
         ),
         AnotherWay(
-          appColorsCubit: appColorsCubit,
+          appColors: appColors,
           primaryText: anotherWayPrimaryText,
           linkText: anotherWayLinkText,
           callback: anotherWayCallback,

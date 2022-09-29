@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/view/widgets/safe_scaffold_with_padding.dart';
+import '../../../core/cubit/app_colors_cubit.dart';
+import '../../../core/model/app_colors.dart';
+import '../../../core/view/widgets/custom_scaffolds.dart';
 import '../../authentication/ui/authentication_listener.dart';
 import 'welcome_body.dart';
 
@@ -11,14 +14,18 @@ class WelcomePage extends StatefulWidget {
   WelcomePageState createState() => WelcomePageState();
 }
 
-//TODO: Implementation change, such as SignIn and SignUp
 class WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
-    return const SafeScaffoldWithPadding(
-      padding: EdgeInsets.all(30),
-      child: AuthenticationListener(
-        child: WelcomeBody(),
+    return SafeFullscreenScrollableScaffold(
+      padding: const EdgeInsets.all(30),
+      child: BlocBuilder<AppColorsCubit, AppColors>(
+        builder: (context, appColors) {
+          return AuthenticationListener(
+            appColors: appColors,
+            child: WelcomeBody(appColors: appColors),
+          );
+        },
       ),
     );
   }

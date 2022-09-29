@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../constants/regex.dart' as regex_constants;
-import '../../../localization.i18n.dart';
+import '../../localization/localization.i18n.dart';
 
 part 'validation_state.dart';
 
