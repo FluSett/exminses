@@ -33,18 +33,20 @@ class AuthenticationListener extends StatelessWidget {
           ),
           success: (_) {
             navigationService.goBack();
-            showSuccessSnackBar(
+            showErrorOrSuccessSnackBar(
               context,
               appColors,
               forgotPasswordSent.i18n,
+              false,
             );
           },
           error: (error) {
             navigationService.goBack();
-            showErrorSnackBar(
+            showErrorOrSuccessSnackBar(
               context,
               appColors,
               error.failure.message,
+              true,
             );
           },
         );

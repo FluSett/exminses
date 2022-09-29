@@ -30,7 +30,12 @@ class SendPasswordResetButton extends StatelessWidget {
                 ? context.read<AuthenticationBloc>().add(
                     AuthenticationEvent.sendPasswordReset(
                         validationCubit.email))
-                : showErrorSnackBar(context, appColors, error.i18n),
+                : showErrorOrSuccessSnackBar(
+                    context,
+                    appColors,
+                    error.i18n,
+                    true,
+                  ),
             child: Text(
               forgotPassword.i18n,
               style: TextStyle(

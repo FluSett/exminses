@@ -26,7 +26,12 @@ class MainButton extends StatelessWidget {
       child: FilledButton(
         onPressed: isActive
             ? callback
-            : () => showErrorSnackBar(context, appColors, fillInAllFields.i18n),
+            : () => showErrorOrSuccessSnackBar(
+                  context,
+                  appColors,
+                  fillInAllFields.i18n,
+                  true,
+                ),
         style: FilledButton.styleFrom(
           backgroundColor: isActive ? appColors.primary : appColors.notActive,
           shape: RoundedRectangleBorder(
